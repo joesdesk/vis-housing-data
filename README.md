@@ -1,7 +1,17 @@
 # vis-housing-data
 A shiny app to visualize some aspects of housing data provided publicly by Zillow
 
-## Introduction
+
+## Screenshot
+
+A preview of the application at work!
+
+![screenshot.png](screenshot.png)
+
+The heatmap shows how relative sizes of the variable of interest which is selected on the left pane.
+The date range control can be used to select the variable with the lastest data.
+
+
 
 ## Dependencies
 
@@ -14,6 +24,8 @@ library(stringr)
 library(USAboundaries)
 library(sf)
 ```
+
+
 
 ## Bibliography
 The main data source for this project is provided by Zillow through Kaggle. The data set can be downloaded for free with an account through Kaggle at [https://www.kaggle.com/zillow/zecon/data](https://www.kaggle.com/zillow/zecon/data) (503 MB). We are providing this attribution as part of the requirements for using this data set and sharing the findings. For this reason, we are also refraining from making the data separately available from the Kaggle source.

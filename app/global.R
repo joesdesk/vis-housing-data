@@ -4,10 +4,10 @@ library(tidyverse)
 library(stringr)
 
 # Load Data
-state_shapes <- read.csv("../results/state_shapes.csv", stringsAsFactors = FALSE) %>% 
+state_shapes <- read.csv("results/state_shapes.csv", stringsAsFactors = FALSE) %>% 
     select(-statefp)
 
-final_homes <- read.csv("../results/final_homes.csv", stringsAsFactors = FALSE) %>% 
+final_homes <- read.csv("results/final_homes.csv", stringsAsFactors = FALSE) %>% 
     rename(state_name = RegionName)
 
 

@@ -23,3 +23,4 @@ ui <- fluidPage(
     )
 )
 
+# rsconnect::deployApp(appDir = 'app', appName = 'vis-housing-data')
