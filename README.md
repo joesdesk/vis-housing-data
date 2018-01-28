@@ -17,12 +17,16 @@ The date range control can be used to select the variable with the lastest data.
 
 Ensure the following libraries can be used on your computer.
 ```r
+
 library(shiny)
 library(tidyverse)
 library(rjson)
 library(stringr)
-library(USAboundaries)
+
 library(sf)
+library(USAboundaries)
+library(USAboundariesData)
+library(leaflet)
 ```
 
 
@@ -34,3 +38,4 @@ Tutorials and resources used.
 * https://deanattali.com/blog/building-shiny-apps-tutorial/
 * http://adamwilson.us/RDataScience/04_Spatial_with_sf.html
 * https://github.com/ropensci/USAboundaries
+* https://rstudio.github.io/leaflet/
