@@ -6,10 +6,14 @@ A shiny app to visualize some aspects of housing data provided publicly by Zillo
 
 A preview of the application at work!
 
-![screenshot.png](screenshot.png)
+![screenshot.png](screenshot1.png)
 
-The heatmap shows how relative sizes of the variable of interest which is selected on the left pane.
-The date range control can be used to select the variable with the lastest data.
+## How to use.
+
+On the left pane, select the housing variable of interest to see how it varies
+spacially and temporally. The map shows the most recent values of the variable
+while the chart below shows how they evolve over time. Click a state to highlight
+it on the chart to see how it changes and compare it with the rest of the states.
 
 
 
