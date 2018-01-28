@@ -56,6 +56,9 @@ data_avail %>%
 
 ```{r}
 state_homes <- read_csv(file = '../data/State_time_series.csv', col_types = cols())
+zip_homes <- read_csv(file = '../data/Zip_time_series.csv', col_types = cols())
+county_homes <- read_csv(file = '../data/County_time_series.csv', col_types = cols())
+city_homes <- read_csv(file = '../data/City_time_series.csv.csv', col_types = cols())
 ```
 
 There's a lot of variables here. First, we make sure that the correct number of states are selected.
@@ -88,10 +91,10 @@ We use the R package "USAboundaries" to obtain the shape of the boundaries. The 
 
 ```{r}
 state_boundaries <- us_states(resolution = 'low')
-#congressional_boundaries <- us_congressional(resolution = 'low')
-#county_boundaries <- us_counties(resolution = 'low')
-#zipcode_boundaries <- us_zipcodes()
-#cities_boundaries <- us_cities()
+congressional_boundaries <- us_congressional(resolution = 'low')
+county_boundaries <- us_counties(resolution = 'low')
+zipcode_boundaries <- us_zipcodes()
+cities_boundaries <- us_cities()
 ```
 
 We write functions to extract the boundaries.
