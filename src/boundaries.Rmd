@@ -1,0 +1,38 @@
+---
+title: "Map study"
+author: "Jomar Sastrillo"
+date: "January 28, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Map data
+
+We use the R package "USAboundaries" to obtain the shape of the boundaries. The documentation for this package explains that we have the available functions
+
+```{r libs}
+library(tidyverse)
+library(leaflet)
+library(stringr)
+library(USAboundaries)
+library(USAboundariesData)
+library(sf)
+```
+
+```{r}
+state_boundaries <- us_states(resolution = 'low')
+#congressional_boundaries <- us_congressional(resolution = 'low')
+county_boundaries <- us_counties(resolution = 'low')
+zipcode_boundaries <- us_zipcodes()
+cities_boundaries <- us_cities()
+```
+
+```{r}
+state_boundaries <- state_boundaries %>% 
+    select(state_name, geometry) %>% 
+    mutate(state_name = str_replace_all(state_name, fixed(" "), ""))
+```
+

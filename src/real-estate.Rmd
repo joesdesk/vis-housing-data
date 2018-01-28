@@ -1,0 +1,113 @@
+---
+title: "Zillow Housing Data Wrangling and Cleaning"
+author: "Jomar Sastrillo"
+date: "January 21, 2018"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(rjson)
+library(stringr)
+```
+
+## Exploring the housing data
+We first explore the structure of the data provided.
+
+```{r}
+# The first item is a description of every field that we could possibly find in the data.
+data_dictionary <- read_csv("../data/DataDictionary.csv", col_types=cols())
+
+all_available_metrics <- fromJSON(file = "../data/all_available_metrics.json")
+
+# Every field for every level (level=state, etc..)
+fields_per_level <- fromJSON(file = "../data/fields_per_level.json")
+```
+
+We want to know which variables are available for which resolution of housing data.
+
+```{r}
+# A data frame containing whether the field is available for the given level
+data_avail <- fields_per_level %>% 
+    map_dfc(function(x){all_available_metrics %in% x}) %>% 
+    mutate(field = all_available_metrics) %>% 
+    select(field, everything())
+
+data_avail %>% head()
+```
+
+Find the regional views which have all the fields.
+
+```{r}
+data_avail %>% 
+    filter( City==T, County==T, Metro==T, Neighborhood==T, State==T, Zip==T )
+```
+
+## Extract the data
+
+```{r}
+state_homes <- read_csv(file = '../data/State_time_series.csv', col_types = cols())
+zip_homes <- read_csv(file = '../data/Zip_time_series.csv', col_types = cols())
+county_homes <- read_csv(file = '../data/County_time_series.csv', col_types = cols())
+city_homes <- read_csv(file = '../data/City_time_series.csv.csv', col_types = cols())
+```
+
+There's a lot of variables here. First, we make sure that the correct number of states are selected.
+
+```{r}
+sel_variables <- state_homes %>% 
+    filter(RegionName!='UnitedStates') %>% 
+    #filter(Date >= '2000-01-01') %>% 
+    summarize_all( funs( sum(is.na(.)) ) ) %>% 
+    gather(variable, na_count, 1:79) %>% 
+    arrange(na_count) %>% 
+    slice(3:14) %>% 
+    pull(variable)
+```
+
+```{r}
+sel_variables
+```
+
+
+```{r}
+final_homes <- state_homes %>% 
+    filter(RegionName!='UnitedStates') %>% 
+    filter(Date >= '2000-01-01') %>% 
+    rename(state_name = RegionName) %>% 
+    select( c('Date', 'state_name', sel_variables) )
+```
+
+We write the wrangled results to a file
+
+```{r}
+write_csv(final_homes, path = "../app/final_homes.csv", col_names = T)
+```
+
+```{r}
+final_homes
+```
+
+```{r}
+final_homes %>% 
+    select(Date, state_name, qq=ZHVI_3bedroom) %>% 
+    group_by(state_name) %>%
+    arrange(desc(Date)) %>%
+    slice(1) %>% 
+    right_join(state_boundaries, by = 'state_name') %>% 
+    filter_all( all_vars(!is.na(.)) )
+```
+
+```{r}
+final_homes %>% 
+    filter(state_name=="Maine") %>% 
+```
+
+```{r}
+read.csv("../app/final_homes.csv", stringsAsFactors = FALSE) %>% 
+    mutate(Date = date(Date), state_name=as.factor(state_name)) %>% 
+```
