@@ -1,0 +1,45 @@
+---
+title: "Leaflet test"
+author: "Jomar Sastrillo"
+date: "January 27, 2018"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+```
+
+## Plotting US Statte Boundaries
+```{r}
+state_boundaries <- us_states(resolution = 'low')
+state_boundaries %>% str
+```
+
+
+```{r cars}
+m <- leaflet(state_boundaries %>% pull(geometry)) %>% 
+    addTiles() %>% 
+    addPolygons(color = "#444444", weight = 1, smoothFactor = 0.5,
+    opacity = 1.0, fillOpacity = 0.5,
+    highlightOptions = highlightOptions(color = "white", weight = 2,
+      bringToFront = TRUE))
+m
+```
+
+```{r}
+county_boundaries <- us_counties(resolution = 'low')
+```
+
+```{r cars}
+m <- leaflet() %>% 
+    addTiles() %>% 
+    addPolygons(color = "#444444", weight = 1, smoothFactor = 0.5,
+    opacity = 1.0, fillOpacity = 0.5,
+    highlightOptions = highlightOptions(color = "white", weight = 2,
+      bringToFront = TRUE), data=county_boundaries$geometry, layerId=county_boundaries$name)
+m
+```
